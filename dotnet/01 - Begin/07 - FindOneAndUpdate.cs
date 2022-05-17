@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class BeingFindOneAndUpdate : BaseClass
+public class BeginFindOneAndUpdate : BaseClass
 {
 
     
