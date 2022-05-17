@@ -42,9 +42,9 @@ public class BeginFindOneAndUpdate : BaseClass
     {
         var client = Config.MongoClient();
         var db = client.GetDatabase("test");
-        MongoDB.Driver.IMongoCollection<Task4> collection = db.GetCollection<Task4>("BeingFindOneAndUpdate");
+        MongoDB.Driver.IMongoCollection<Task4> collection = db.GetCollection<Task4>("BeginFindOneAndUpdate");
         // Drop the collection to clean it
-        db.DropCollection("BeingFindOneAndUpdate");
+        db.DropCollection("BeginFindOneAndUpdate");
         Task4 t4 = new Task4() { state = 100 };
         await collection.InsertOneAsync(t4);
         Task4 myTask = await TryGetOneAsync(collection, t4._id, 100, 200);
