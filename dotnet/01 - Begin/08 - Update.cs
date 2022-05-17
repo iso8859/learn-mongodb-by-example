@@ -19,7 +19,7 @@ public class BeginUpdate : BaseClass
     }
     public record College(
         ObjectId _id,
-        Department Departement,
+        Department Department,
         string Location,
         string CollegeName
         );
@@ -43,7 +43,7 @@ public class BeginUpdate : BaseClass
         /* At this point
         { 
             "_id" : ObjectId("628387c7b249abfe2a3c4f50"), 
-            "Departement" : {
+            "Department" : {
                 "DepartmentId" : "FS-11-140", 
                 "DepartmentName" : "IT", 
                 "DepartmentHead" : "XYZ"
@@ -54,7 +54,7 @@ public class BeginUpdate : BaseClass
         */
         var r = await collection.UpdateOneAsync(
             _ => _._id == school._id,
-            Builders<College>.Update.Set(c => c.Departement.Title, "Information Technology"));
+            Builders<College>.Update.Set(c => c.Department.Title, "Information Technology"));
         
         if (r.ModifiedCount == 0)
             Console.WriteLine("Update failed");
@@ -63,7 +63,7 @@ public class BeginUpdate : BaseClass
             /*
             { 
                 "_id" : ObjectId("628387c7b249abfe2a3c4f50"), 
-                "Departement" : {
+                "Department" : {
                     "DepartmentId" : "FS-11-140", 
                     "DepartmentName" : "IT", 
                     "DepartmentHead" : "XYZ", 
@@ -74,6 +74,51 @@ public class BeginUpdate : BaseClass
             }
 
              */
+        }
+
+        school = new College(
+            ObjectId.Empty,
+            new Department() { DepartmentId = "584-MZ-345", DepartmentName = "LAW", DepartmentHead = "XYZ" },
+            "France",
+            "Paris"
+            );
+        await collection.InsertOneAsync(school);
+
+        /*
+        { 
+            "_id" : ObjectId("628387c7b249abfe2a3c4f51"), 
+            "Department" : {
+                "DepartmentId" : "584-MZ-345", 
+                "DepartmentName" : "LAW", 
+                "DepartmentHead" : "XYZ"
+            }, 
+            "Location" : "France", 
+            "CollegeName" : "Paris"
+        }
+        */
+
+        r = await collection.UpdateOneAsync(
+             new FilterDefinitionBuilder<College>().Where(x => x._id == school._id),
+            new UpdateDefinitionBuilder<College>().Set(_ => _.Department.Title, "ABCD"),
+            new UpdateOptions() { IsUpsert = false });
+
+        if (r.ModifiedCount == 0)
+            Console.WriteLine("Update failed");
+        else
+        {
+            /*
+            { 
+                "_id" : ObjectId("628387c7b249abfe2a3c4f51"), 
+                "Department" : {
+                    "DepartmentId" : "584-MZ-345", 
+                    "DepartmentName" : "LAW", 
+                    "DepartmentHead" : "XYZ", 
+                    "Title" : "ABCD"
+                }, 
+                "Location" : "France", 
+                "CollegeName" : "Paris"
+            }
+            */
         }
     }
 }
