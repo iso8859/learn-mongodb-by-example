@@ -6,5 +6,6 @@ await (new BeginSerialization()).RunAsync();
 await (new BeginAttributes()).RunAsync();
 await (new BeginIndex()).RunAsync();
 await (new BeginFindOneAndUpdate()).RunAsync();
+await (new BeginUpdate()).RunAsync();
 
 await (new DynamicQuery()).RunAsync();
