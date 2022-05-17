@@ -1,4 +1,8 @@
 # Learn MongoDB 
-Learn mongodb quickly with examples.
 
+Learn mongodb from examples.
+
+Find hints and good usage infos.
+
+Learn MongoDB fast with good example in your driver implementation.
 
