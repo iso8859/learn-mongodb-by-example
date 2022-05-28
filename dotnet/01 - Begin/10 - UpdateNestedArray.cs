@@ -76,9 +76,13 @@ public class BeginUpdateNestedArray : BaseClass
             }
         });
 
+        var update = Builders<Country>.Update.Set(_ => _.States[0].Districts[-1].Population, "5,000,000");
+        Console.WriteLine(update.Render(collection.DocumentSerializer, collection.Settings.SerializerRegistry));
+        // { "$set" : { "States.0.Districts.$.Population" : "5,000,000" } }
+
         await collection.FindOneAndUpdateAsync<Country>(   // <= you must tell C# this is Country to have linq syntax available
             _ => _.Id == "USA" && _.States.Any(s => s.Name == "California") && _.States.Any(s => s.Districts.Any(d => d.Name == "Los Angeles")),
-            Builders<Country>.Update.Set(_ => _.States.ElementAt(0).Districts.ElementAt(0).Population, "5,000,000")
+            update
             );
 
         /*
