@@ -23,6 +23,8 @@ public class BeginStart : BaseClass
             .Add("count", 1)
             .Add("info", new BsonDocument().Add("x", 203).Add("y", 102));
 
+        int x = doc["info"]["x"].AsInt32;
+
         // Insert the document
         client.GetDatabase("test").GetCollection<BsonDocument>("BeginStart").InsertOne(doc);
 

@@ -47,7 +47,7 @@ public class BeginIndex : BaseClass
             }
         }, 
         "winningPlan" : {
-            "stage" : "COLLSCAN",   <= This mean no index usage
+            "stage" : "COLLSCAN",   <= This mean no index usage, scan the collection
             "filter" : {
                 "Age" : {
                     "$eq" : 10.0
@@ -56,7 +56,7 @@ public class BeginIndex : BaseClass
             "direction" : "forward"
         }, 
 
-        --------------------------------------------
+        -----------------------------------------------------------------------------------------------------------------
 
         db.BeginIndex.find({ "Name": "John09999" }).explain()
 

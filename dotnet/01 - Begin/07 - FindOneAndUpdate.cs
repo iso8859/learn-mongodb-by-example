@@ -17,15 +17,13 @@ public class BeginFindOneAndUpdate : BaseClass
         public DateTime start;
     }
 
-    // Example several node received a message about a new task with a certain id
-    // The first node that can find it, change the state and will consume the task.
+    // Example about several node received a message about a new task with a certain id
+    // The first node that can reserve it will process the task.
     // The other nodes will get a null answer
     public async Task<Task4> TryGetOneAsync(IMongoCollection<Task4> collection, ObjectId id, int searchState = 100, int state = 200, CancellationToken cancel = default)
     {
-        var _f = Builders<Task4>.Filter;
-        var tmp = await collection.FindOneAndUpdateAsync(
-            _f.And(_f.Eq(_ => _._id, id), _f.Eq(_ => _.state, searchState)),
-            // _ => _._id == id && _.state == searchState,
+        var tmp = await collection.FindOneAndUpdateAsync<Task4>(  // Here you need to specify <Task4> for linq syntax to work next line
+            _ => _._id == id && _.state == searchState,
             Builders<Task4>.Update
                     .Set(_ => _.state, state)
                     .CurrentDate(_ => _.start, UpdateDefinitionCurrentDateType.Date),

@@ -22,6 +22,9 @@ public class BeginAttributes : BaseClass
         [BsonIgnore]
         public DBInfo child;    // Ignore this variable
 
+        [BsonIgnoreIfNull]      // Ignore this variable if it is null
+        public string name;     
+
         [BsonElement("sp")]     // Rename this variable
         public string searchPolicy;
 

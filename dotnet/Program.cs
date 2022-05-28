@@ -7,5 +7,6 @@ await (new BeginAttributes()).RunAsync();
 await (new BeginIndex()).RunAsync();
 await (new BeginFindOneAndUpdate()).RunAsync();
 await (new BeginUpdate()).RunAsync();
+await (new BeginUpdateNestedArray()).RunAsync();
 
 await (new DynamicQuery()).RunAsync();
