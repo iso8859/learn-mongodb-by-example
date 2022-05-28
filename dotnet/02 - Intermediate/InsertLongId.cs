@@ -51,7 +51,7 @@ public class InsertLongId : BaseClass
         started.Wait();
 
         // Check the consistency of the Id
-        List<long> ids = (await collection.Find(_ => true).ToListAsync()).Select(p => p.Id).ToList();
+        List<long> ids = (await collection.Find(_ => true).ToListAsync()).Select(p => p.Id).ToList(); // _ => true = all documents
         Console.WriteLine("db order : " + string.Join(',', ids));
         // one possible output : 1,2,4,3,5,7,11,6,13,8,15,16,14,12
         ids.Sort();
