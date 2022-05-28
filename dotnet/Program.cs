@@ -10,3 +10,7 @@ await (new BeginUpdate()).RunAsync();
 await (new BeginUpdateNestedArray()).RunAsync();
 
 await (new DynamicQuery()).RunAsync();
+await (new CheckIdConsistency()).RunAsync();
+await (new InsertLongId()).RunAsync();
+
+
