@@ -40,11 +40,15 @@ public class InsertLongId : BaseClass
         db.DropCollection("CheckIdConsistency");
         db.GetCollection<BsonDocument>("seq").DeleteOne(Builders<BsonDocument>.Filter.Eq("_id", "person"));
 
+        CountdownEvent started = new CountdownEvent(16);        
         // Insert 16 document in parallel
         Parallel.For(0, 16, async(i) =>
         {
-            await collection.InsertOneAsync(new Person() { Id = NextInt64Async(db, "person").Result, Name = "Person" + i });
+            await collection.InsertOneAsync(new Person() { Id = await NextInt64Async(db, "person"), Name = "Person" + i });
+            started.Signal();
         });
+
+        started.Wait();
 
         // Check the consistency of the Id
         List<long> ids = (await collection.Find(_ => true).ToListAsync()).Select(p => p.Id).ToList();
