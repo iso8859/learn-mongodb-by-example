@@ -80,6 +80,7 @@ public class BeginUpdateNestedArray : BaseClass
         Console.WriteLine(update.Render(collection.DocumentSerializer, collection.Settings.SerializerRegistry));
         // { "$set" : { "States.0.Districts.$.Population" : "5,000,000" } }
 
+        // Update existing record
         await collection.FindOneAndUpdateAsync<Country>(   // <= you must tell C# this is Country to have linq syntax available
             _ => _.Id == "USA" && _.States.Any(s => s.Name == "California") && _.States.Any(s => s.Districts.Any(d => d.Name == "Los Angeles")),
             update

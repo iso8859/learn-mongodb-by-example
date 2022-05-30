@@ -9,8 +9,9 @@ await (new BeginFindOneAndUpdate()).RunAsync();
 await (new BeginUpdate()).RunAsync();
 await (new BeginUpdateNestedArray()).RunAsync();
 
-await (new DynamicQuery()).RunAsync();
+await (new Aggregation()).RunAsync();
 await (new CheckIdConsistency()).RunAsync();
+await (new DynamicQuery()).RunAsync();
 await (new InsertLongId()).RunAsync();
 
 
