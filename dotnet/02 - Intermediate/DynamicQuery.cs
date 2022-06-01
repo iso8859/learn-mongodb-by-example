@@ -54,13 +54,11 @@ public class DynamicQuery : BaseClass
         List<DBInfo> infoList3 = await collection.Find(final).ToListAsync();
 
         // Dynamic projection
-        var _p = Builders<DBInfo>.Projection;
-        var projectionDefinition = _p.Include(_ => _.count);
-        projectionDefinition = projectionDefinition.Include(_ => _.info);
-        projectionDefinition = projectionDefinition.Include("type");
+        var projectionDefinition = Builders<DBInfo>.Projection.Include(_ => _.count);
+        projectionDefinition = projectionDefinition.Include(_ => _.info.x);
+        projectionDefinition = projectionDefinition.Include("type"); // You can also use text
 
         Console.WriteLine(collection.Find(_ => _.name == "MongoDB").Project(projectionDefinition).FirstOrDefault().ToJson());
-        // { "_id" : ObjectId("6297244f3c48e8851d70e5ed"), "type" : "DB", "count" : 1, "info" : { "x" : 1, "y" : 2 } }
-        // name is not present
+        // { "_id" : ObjectId("629724fe21042b3be497b04d"), "type" : "DB", "count" : 1, "info" : { "x" : 1 } }
     }
 }
