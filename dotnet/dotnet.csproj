@@ -8,10 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="03 - Expert\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="..\README.md" Link="README.md" />
   </ItemGroup>
 

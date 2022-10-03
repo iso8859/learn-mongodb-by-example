@@ -14,4 +14,4 @@ await (new CheckIdConsistency()).RunAsync();
 await (new DynamicQuery()).RunAsync();
 await (new InsertLongId()).RunAsync();
 
-
+await (new BatchUnicity()).RunAsync();

@@ -1,9 +1,12 @@
-﻿using MongoDB.Driver;
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
+using MongoDB.Driver.Core.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static MongoDB.Driver.WriteConcern;
 
 public static class Config
 {
@@ -23,6 +26,23 @@ public static class Config
     public static IMongoClient MongoClient()
     {
         return new MongoClient(connectionString);
+    }
+
+    public static IMongoClient MongoClientDebug(int timeout = 0)
+    {
+        var mongoConnectionUrl = new MongoUrl(connectionString);
+        var mongoClientSettings = MongoClientSettings.FromUrl(mongoConnectionUrl);
+        if (timeout > 0)
+            mongoClientSettings.ConnectTimeout = TimeSpan.FromMilliseconds(timeout);
+        mongoClientSettings.ClusterConfigurator = cb =>
+        {
+            cb.Subscribe<CommandStartedEvent>(e =>
+            {
+                string message = $"{DateTime.Now.ToString("HH:mm:sss:fff")}-{e.CommandName}-{e.Command.ToJson()}";
+                Console.WriteLine(message);
+            });
+        };
+        return new MongoClient(mongoClientSettings);
     }
 }
 
