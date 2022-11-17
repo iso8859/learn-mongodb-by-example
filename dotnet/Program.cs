@@ -1,5 +1,7 @@
 ﻿Config.Init();
 
+await (new Dictionary()).RunAsync();
+
 await (new BeginStart()).RunAsync();
 await (new BeginSimple()).RunAsync();
 await (new BeginSerialization()).RunAsync();
