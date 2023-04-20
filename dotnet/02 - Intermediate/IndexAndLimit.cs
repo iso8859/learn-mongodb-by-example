@@ -58,5 +58,8 @@ public class IndexAndLimit : BaseClass
         duration = DateTime.Now - start;
         Console.WriteLine(a["index"] + " = " + duration.TotalMilliseconds + "ms");
 
+        // Example value, restarting mongodb server and running the example again
+        // 90001 = 10,4953ms
+        // 90001 = 29051,6812ms
     }
 }
