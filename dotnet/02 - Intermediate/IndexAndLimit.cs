@@ -40,6 +40,8 @@ public class IndexAndLimit : BaseClass
         batch.Clear();
         var duration = DateTime.Now - start;
         Console.WriteLine($"insert duration = {duration.TotalMilliseconds}ms");
+
+        // Put a breakpoint and restart mongodb to be sure nothing is in memory cache
         // Do the query
         start = DateTime.Now;
         var cursor = dbCol.Find(Builders<BsonDocument>.Filter.Gt("index", 90000)).Limit(1);
@@ -49,8 +51,8 @@ public class IndexAndLimit : BaseClass
 
         // Drop the index
         dbCol.Indexes.DropOne(indexName);
-        // Put a breakpoint and restart mongodb to be sure nothing is in memory cache
 
+        // Put a breakpoint and restart mongodb to be sure nothing is in memory cache
         // Do the query
         start = DateTime.Now;
         cursor = dbCol.Find(Builders<BsonDocument>.Filter.Gt("index", 90000)).Limit(1);
@@ -60,6 +62,6 @@ public class IndexAndLimit : BaseClass
 
         // Example value, restarting mongodb server and running the example again
         // 90001 = 10,4953ms
-        // 90001 = 29051,6812ms
+        // 90001 = 816,6496ms
     }
 }
