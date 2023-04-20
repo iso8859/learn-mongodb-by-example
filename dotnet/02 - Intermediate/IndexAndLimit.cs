@@ -42,9 +42,12 @@ public class IndexAndLimit : BaseClass
         Console.WriteLine($"insert duration = {duration.TotalMilliseconds}ms");
 
         // Put a breakpoint on start and restart mongodb to be sure nothing is in memory cache
-        // Do the query
+        // Do the query, I don't need bigdata
         start = DateTime.Now;
-        var cursor = dbCol.Find(Builders<BsonDocument>.Filter.Gt("index", 90000)).Limit(1);
+        var cursor = dbCol.
+            Find(Builders<BsonDocument>.Filter.Gt("index", 90000)).
+            Project(Builders<BsonDocument>.Projection.Exclude("bigdata")).
+            Limit(1);
         BsonDocument a = await cursor.FirstAsync();
         duration = DateTime.Now - start;
         Console.WriteLine(a["index"] + " = " + duration.TotalMilliseconds + "ms");
@@ -53,15 +56,22 @@ public class IndexAndLimit : BaseClass
         dbCol.Indexes.DropOne(indexName);
 
         // Put a breakpoint on start and restart mongodb to be sure nothing is in memory cache
-        // Do the query
+        // Do the query, I don't need bigdata
         start = DateTime.Now;
-        cursor = dbCol.Find(Builders<BsonDocument>.Filter.Gt("index", 90000)).Limit(1);
+        cursor = dbCol.
+            Find(Builders<BsonDocument>.Filter.Gt("index", 90000)).
+            Project(Builders<BsonDocument>.Projection.Exclude("bigdata")).
+            Limit(1);
         a = await cursor.FirstAsync();
         duration = DateTime.Now - start;
         Console.WriteLine(a["index"] + " = " + duration.TotalMilliseconds + "ms");
 
-        // Example value, restarting mongodb server and running the example again
+        // Example value, restarting mongodb server before each search including bigdata value
         // 90001 = 89,9588ms
         // 90001 = 720,7842ms
+
+        // Example value, restarting mongodb server before each search EXCLUDING bigdata value
+        // 90001 = 80,7419ms
+        // 90001 = 710,3106ms
     }
 }
