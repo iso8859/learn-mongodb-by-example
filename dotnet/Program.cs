@@ -15,5 +15,6 @@ await (new DynamicQuery()).RunAsync();
 await (new InsertLongId()).RunAsync();
 await (new Dictionary()).RunAsync();
 await (new Storefile()).RunAsync();
+await (new IndexAndLimit()).RunAsync();
 
 await (new BatchUnicity()).RunAsync();
