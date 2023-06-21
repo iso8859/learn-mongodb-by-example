@@ -38,6 +38,7 @@ public class Aggregation : BaseClass
             new Pizza() { _id= 8, name= "Vegan", size= "medium", price= 18,quantity= 10, date = DateTime.Parse( "2021-01-13T05:10:13Z" ) } 
         });
 
+        // A good e-book about Aggregation https://www.practical-mongodb-aggregations.com/
         var pizza = collection.Aggregate(new AggregateOptions() { AllowDiskUse = true }).
             Match(_ => _.size == "medium").
             Group(_ => _.name, _ => new { totalQuantity = _.Sum(_ => _.quantity), name = _.First().name }).
