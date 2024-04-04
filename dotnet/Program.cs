@@ -1,5 +1,9 @@
 ﻿Config.Init();
 
+await (new ElementMatch()).RunAsync();
+
+return;
+
 await (new BeginStart()).RunAsync();
 await (new BeginSimple()).RunAsync();
 await (new BeginSerialization()).RunAsync();
